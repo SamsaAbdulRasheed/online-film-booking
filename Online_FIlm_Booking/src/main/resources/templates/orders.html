@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+    <link rel="stylesheet" href="#" th:href="@{/css/index.css}" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mb-0">
+<div class="row no-gutter">
+<div class="col-md-3 menu">
+<div class="logo mt-4 ml-3 mr-3 mb-5  text-center text-light bg-dark pt-1 pb-1">
+<h3>Gold Theater</h3>
+</div>
+<ul class="list">
+<li><a th:href="@{/home}"><i class="fas fa-home"></i>&nbsp;&nbsp;Home</a></li>
+<li ><a th:classappend="${menu == 'order' } ? 'text-dark' : '' " th:href="@{/order-history}" ><i class="fas fa-history"></i>&nbsp;&nbsp;Orders</a></li>
+<li th:if="${session.user.cust_id==1}"><a th:classappend="${menu == 'alluser' } ? 'text-dark' : '' " th:href="@{/all-customer-records}"><i class="fas fa-users"></i>All Users</a></li>
+<li><a th:href="@{/setting}"><i class="fas fa-cogs"></i>&nbsp;&nbsp;Setting</a></li>
+<li><a href=""><i class="fas fa-address-card"></i>&nbsp;&nbsp;About us</a></li>
+<li><a href=""><i class="fas fa-phone-square-alt"></i>&nbsp;&nbsp;Contact us</a></li>
+<li><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Logout</a></li>
+					
+</ul>
+</div>
+    <div class="col-9 history">
+				<div class="history-section">
+					<div class="history-head">
+						<p>
+							<span><i class="fas fa-user"></i></span>&nbsp;<span
+								class="name-user" th:if="${session.user.name}"
+								th:text="${session.user.name}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><i
+								class="fas fa-envelope"></i> <sup><i class="fas fa-sms"></i></sup></span>
+						</p>
+					</div>
+
+</div>
+
+
+<table class="table table-striped table-hover">
+	<thead>
+			<tr>
+			
+						<th scope="col">Movie Name</th>
+     					<th scope="col">Seat</th>
+      					<th scope="col">Price</th>
+      					<th scope="col">Total</th>
+						<th scope="col">Booking Date</th>
+						<th scope="col">Show On date</th>
+						<th scope="col">Show On Time</th>
+						
+	
+			</tr>
+			</thead>
+			
+		<tbody>
+			<tr th:each = "history: ${hlist}">
+			<th  th:text = "${history.moviename}"></th>
+			<th  th:text="${history.seatNo}" ></th>
+			<th  th:text="${history.price}" ></th>
+			<th  th:text="${history.total}" ></th>
+			<th  th:text="${history.bookondate}" ></th>
+			<th  th:text="${history.showondate}" 
+			 th:classappend="${(history.showondate eq #dates.createToday()) or (history.showondate.after(#dates.createNow())) ? 'active' : 'deactive' }"></th>
+			
+			<th  th:text="${history.showtime}"
+			 th:classappend="${(history.showondate eq #dates.createToday()) or (history.showondate.after(#dates.createNow())) ? 'active' : 'deactive' }"></th>
+			</tr>
+		</tbody>
+		
+	</table>
+	</div>
+	</div>
+	</div>
+	</div>
+</body>
+</html>
